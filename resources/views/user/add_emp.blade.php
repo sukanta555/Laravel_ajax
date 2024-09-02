@@ -57,77 +57,92 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-        // Add or Update employee
-        $('#sub').click(function(){
-            let employeeId = $('#emp_mg').data('id');
-            let formid = $('#emp_mg').serialize();
-            
-            let url = employeeId ? `/employee/${employeeId}` : "{{ route('employee.add_employee') }}"; // post router name added
+   $(document).ready(function(){
+    // Add or Update employee
+    $('#sub').click(function(){
+        let employeeId = $('#emp_mg').data('id');
+        let formid = $('#emp_mg').serialize();
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: "json",
-                data: formid,
-                success: function(data) {
-                    console.log(data);
+        let url = employeeId ? `/employee/${employeeId}` : "{{ route('employee.add_employee') }}"; // updated route name
 
-                    if(employeeId){
-                        // Update the row in the table
-                        let row = $(`#employee-${employeeId}`);
-                        row.find('td:nth-child(1)').text(data.data.name);
-                        row.find('td:nth-child(2)').text(data.data.email);
-                        row.find('td:nth-child(3)').text(data.data.mob);
-                    } else {
-                        // Add the new row to the table
-                        $('tbody').append(
-                            `<tr id="employee-${data.data.id}">
-                                <td>${data.data.name}</td>
-                                <td>${data.data.email}</td>
-                                <td>${data.data.mob}</td>
-                                <td>
-                                    <button class="edit-btn" data-id="${data.data.id}">Edit</button>
-                                    <button class="delete-btn" data-id="${data.data.id}">Delete</button>
-                                </td>
-                            </tr>`
-                        );
-                    }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: formid,
+            success: function(data) {
+                console.log(data);
 
-                    // Clear the form and reset the data-id attribute
-                    $('#emp_mg').trigger('reset').removeAttr('data-id');
+                // Show success message
+                $('#message').html('<p style="color: green;">' + data.success + '</p>').fadeOut(5000);
+
+                if(employeeId){
+                    // Update the row in the table
+                    let row = $(`#employee-${employeeId}`);
+                    row.find('td:nth-child(1)').text(data.data.name);
+                    row.find('td:nth-child(2)').text(data.data.email);
+                    row.find('td:nth-child(3)').text(data.data.mob);
+                } else {
+                    // Add the new row to the table
+                    $('tbody').append(
+                        `<tr id="employee-${data.data.id}">
+                            <td>${data.data.name}</td>
+                            <td>${data.data.email}</td>
+                            <td>${data.data.mob}</td>
+                            <td>
+                                <button class="edit-btn" data-id="${data.data.id}">Edit</button>
+                                <button class="delete-btn" data-id="${data.data.id}">Delete</button>
+                            </td>
+                        </tr>`
+                    );
                 }
-            });
-        });
 
-        // Edit employee
-        $(document).on('click', '.edit-btn', function(){
-            let employeeId = $(this).data('id');
-            $.ajax({
-                url: `/employee/${employeeId}/edit`,
-                type: 'GET',
-                success: function(data) {
-                    $('input[name="name"]').val(data.name);
-                    $('input[name="email"]').val(data.email);
-                    $('input[name="mob"]').val(data.mob);
-                    $('#emp_mg').attr('data-id', employeeId); // Attach ID for the update process
-                }
-            });
-        });
-
-        // Delete employee
-        $(document).on('click', '.delete-btn', function(){
-            let employeeId = $(this).data('id');
-            $.ajax({
-                url: `/employee/${employeeId}`,
-                type: 'DELETE',
-                success: function(data) {
-                    console.log(data);
-                    $(`#employee-${employeeId}`).remove(); // Remove the deleted employee from the DOM
-                }
-            });
+                // Clear the form and reset the data-id attribute
+                $('#emp_mg').trigger('reset').removeAttr('data-id');
+            },
+            error: function(xhr) {
+                // Show error message
+                $('#message').html('<p style="color: red;">Error: ' + xhr.responseJSON.message + '</p>').fadeOut(5000);
+            }
         });
     });
+
+    // Edit employee
+    $(document).on('click', '.edit-btn', function(){
+        let employeeId = $(this).data('id');
+        $.ajax({
+            url: `/employee/${employeeId}/edit`,
+            type: 'GET',
+            success: function(data) {
+                $('input[name="name"]').val(data.name);
+                $('input[name="email"]').val(data.email);
+                $('input[name="mob"]').val(data.mob);
+                $('#emp_mg').attr('data-id', employeeId); // Attach ID for the update process
+            }
+        });
+    });
+
+    // Delete employee
+    $(document).on('click', '.delete-btn', function(){
+        let employeeId = $(this).data('id');
+        $.ajax({
+            url: `/employee/${employeeId}`,
+            type: 'DELETE',
+            success: function(data) {
+                console.log(data);
+                $(`#employee-${employeeId}`).remove(); // Remove the deleted employee from the DOM
+
+                // Show success message for deletion
+                $('#message').html('<p style="color: green;">' + data.success + '</p>').fadeOut(5000);
+            },
+            error: function(xhr) {
+                // Show error message for deletion
+                $('#message').html('<p style="color: red;">Error: ' + xhr.responseJSON.message + '</p>').fadeOut(5000);
+            }
+        });
+    });
+});
+
 </script>
 </body>  
 </html>
