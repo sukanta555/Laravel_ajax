@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
     {{-- Add --}}
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>User Form with Table</title>  
 </head>  
 <body>  
@@ -47,8 +48,8 @@
                 <td>{{ $employee->email }}</td>
                 <td>{{ $employee->mob }}</td>
                 <td>
-                    <button class="edit-btn" data-id="{{ $employee->id }}">Edit</button>
-                    <button class="delete-btn" data-id="{{ $employee->id }}">Delete</button>
+                    <button class="edit-btn" data-id="{{ $employee->id }}"><i class="fa fa-edit" style="font-size:24px"></i></button>
+                    <button class="delete-btn" data-id="{{ $employee->id }}"><i class="fa fa-trash-o" style="font-size:24px"></i></button>
                 </td>
             </tr>
             @endforeach 
@@ -98,8 +99,8 @@
                             <td>${data.data.email}</td>
                             <td>${data.data.mob}</td>
                             <td>
-                                <button class="edit-btn" data-id="${data.data.id}">Edit</button>
-                                <button class="delete-btn" data-id="${data.data.id}">Delete</button>
+                                <button class="edit-btn" data-id="${data.data.id}"><i class="fa fa-edit" style="font-size:24px"></i></button>
+                                <button class="delete-btn" data-id="${data.data.id}"><i class="fa fa-trash-o" style="font-size:24px"></i></button>
                             </td>
                         </tr>`
                     );
