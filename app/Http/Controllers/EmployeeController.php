@@ -8,7 +8,8 @@ use App\Models\Employee;
 class EmployeeController extends Controller
 {
     public function index(){
-        $employees = Employee::all();
+        //$employees = Employee::all();
+        $employees = Employee::paginate(3);
         return view('user.add_emp', compact('employees'));
     }
 

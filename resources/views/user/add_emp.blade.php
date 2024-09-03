@@ -4,6 +4,10 @@
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
+    {{-- Add --}}
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>User Form with Table</title>  
 </head>  
 <body>  
@@ -50,6 +54,10 @@
             @endforeach 
         </tbody>  
     </table>  
+<!---- Add this line------->
+    <div class="d-flex justify-content-center">
+        {{{ $employees->links() }}}
+    </div>
 </div>  
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>   --}}
@@ -57,7 +65,7 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script>
-   $(document).ready(function(){
+    $(document).ready(function(){
     // Add or Update employee
     $('#sub').click(function(){
         let employeeId = $('#emp_mg').data('id');
