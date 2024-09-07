@@ -32,7 +32,7 @@ class EmployeeController extends Controller
         $employees = Employee::find($id);
         $employees->name = $request->post('name');
         $employees->email = $request->post('email');
-        $employees->mob = $request->post('mob');
+        $employees->mob = $request->post('mob');       
         $employees->save();
 
         return response()->json(['success' => 'Employees updated successfully!', 'data' => $employees]);
